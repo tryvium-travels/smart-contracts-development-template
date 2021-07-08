@@ -1,0 +1,25 @@
+{
+  "name": "smart-contracts",
+  "version": "0.0.1",
+  "description": "The Tryvium Smart Contracts repository, based on Waffle, Typescript",
+  "main": "index.js",
+  "repository": "git@github.com:tryvium-travels/smart-contracts.git",
+  "author": "Tryvium Travels LTD",
+  "license": "MIT",
+  "scripts": {
+    "build": "waffle",
+    "flatten": "waffle flatten",
+    "test": "NODE_ENV=test mocha -r ts-node/register/transpile-only --timeout 50000 --no-warnings test/**/*.test.{js,ts}"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.2.0",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^8.2.3",
+    "@types/node": "^16.3.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "mocha": "^9.0.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}

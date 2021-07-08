@@ -1,0 +1,13 @@
+node_modules
+build
+cache
+flatten
+
+# yarn 2 and non zero-install
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
