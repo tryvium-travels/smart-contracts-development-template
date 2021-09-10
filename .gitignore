@@ -2,6 +2,9 @@ node_modules
 build
 cache
 flatten
+typechain
+artifacts
+coverage
 
 # yarn 2 and non zero-install
 .yarn/*

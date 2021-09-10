@@ -7,19 +7,28 @@
   "author": "Tryvium Travels LTD",
   "license": "MIT",
   "scripts": {
-    "build": "waffle",
+    "build": "hardhat compile",
     "flatten": "waffle flatten",
-    "test": "NODE_ENV=test mocha -r ts-node/register/transpile-only --timeout 50000 --no-warnings test/**/*.test.{js,ts}"
+    "test": "yarn build && hardhat test"
   },
   "devDependencies": {
+    "@atixlabs/hardhat-time-n-mine": "^0.0.5",
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.2.0",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@typechain/hardhat": "^2.3.0",
     "@types/chai": "^4.2.21",
-    "@types/mocha": "^8.2.3",
-    "@types/node": "^16.3.1",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.9.1",
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.6",
+    "hardhat": "^2.6.4",
+    "hardhat-gas-reporter": "^1.0.4",
     "mocha": "^9.0.2",
-    "ts-node": "^10.1.0",
-    "typescript": "^4.3.5"
+    "ts-node": "^10.2.1",
+    "typechain": "^5.1.2",
+    "typescript": "4.3.5"
   }
 }

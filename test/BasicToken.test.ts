@@ -1,50 +1,77 @@
-import { expect, use } from "chai";
-import { Contract } from "ethers";
-import { deployContract, MockProvider, solidity } from "ethereum-waffle";
-import BasicToken from "../build/BasicToken.json";
-
-use(solidity);
+import { ethers } from "hardhat";
+import { Signer } from "ethers";
+import { expect } from "chai";
+import { BasicToken } from "@/typechain";
 
 describe("BasicToken", () => {
-    const [wallet, walletTo] = new MockProvider().getWallets();
-    let token: Contract;
+    const wallet_initial_balance = 1000;
+    const other_initial_balance = 0;
+    const transfer_value = 1;
+    
+    let token: BasicToken;
 
-    beforeEach(async () => {
-        token = await deployContract(wallet, BasicToken, [1000]);
+    let wallet: Signer;
+    let other: Signer;
+
+    let wallet_address: any;
+    let other_address: any
+
+
+    beforeEach( async () => {
+        
+        [wallet, other] = await ethers.getSigners();
+
+        const token_factory = await ethers.getContractFactory("BasicToken");
+        token = await token_factory.deploy(wallet_initial_balance);
+        await token.deployed();
+
+        wallet_address = await wallet.getAddress();
+        other_address = await other.getAddress();
+
     });
+
 
     it("Assigns initial balance", async () => {
-        expect(await token.balanceOf(wallet.address)).to.equal(1000);
+        expect(await token.balanceOf(wallet_address)).to.be.equal(wallet_initial_balance);
     });
+
 
     it("Transfer adds amount to destination account", async () => {
-        await token.transfer(walletTo.address, 7);
-        expect(await token.balanceOf(walletTo.address)).to.equal(7);
+        
+        await token.transfer(other_address, transfer_value);
+
+        expect( await token.balanceOf(wallet_address) )
+        .to.equal( wallet_initial_balance - transfer_value );
+
+        expect( await token.balanceOf(other_address) )
+        .to.equal( other_initial_balance + transfer_value );
+
     });
+
 
     it("Transfer emits event", async () => {
-        await expect(token.transfer(walletTo.address, 7))
-            .to.emit(token, "Transfer")
-            .withArgs(wallet.address, walletTo.address, 7);
+        
+        await expect(token.transfer(other_address, transfer_value))
+                    .to.emit(token, "Transfer")
+                    .withArgs(wallet_address, other_address, transfer_value);
+
     });
+
 
     it("Can not transfer above the amount", async () => {
-        await expect(token.transfer(walletTo.address, 1007)).to.be.reverted;
+
+        await expect( token.transfer(other_address, wallet_initial_balance + 1) )
+                .to.be.reverted;
+
     });
+
 
     it("Can not transfer from empty account", async () => {
-        const tokenFromOtherWallet = token.connect(walletTo);
-        await expect(tokenFromOtherWallet.transfer(wallet.address, 1))
-            .to.be.reverted;
+        
+        const token_from_other_wallet = await token.connect(other_address);
+        await expect( token_from_other_wallet.transfer(wallet_address, transfer_value) )
+        .to.be.reverted;
+
     });
 
-    it("Calls totalSupply on BasicToken contract", async () => {
-        await token.totalSupply();
-        expect("totalSupply").to.be.calledOnContract(token);
-    });
-
-    it("Calls balanceOf with sender address on BasicToken contract", async () => {
-        await token.balanceOf(wallet.address);
-        expect("balanceOf").to.be.calledOnContractWith(token, [wallet.address]);
-    });
 });
