@@ -1,6 +1,6 @@
 {
   "name": "smart-contracts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The Tryvium Smart Contracts repository, based on Waffle, Typescript",
   "main": "index.js",
   "repository": "git@github.com:tryvium-travels/smart-contracts.git",
