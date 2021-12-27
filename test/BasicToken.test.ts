@@ -1,6 +1,6 @@
 import { ethers, waffle } from "hardhat";
 import { expect } from "chai";
-import { BasicToken } from "@/typechain";
+import { BasicToken, BasicToken__factory } from "@/typechain-types";
 
 const { provider: mock_provider } = waffle;
 
@@ -17,7 +17,7 @@ describe("BasicToken", () => {
     ] = mock_provider.getWallets();
 
     beforeEach(async () => {
-        const token_factory = await ethers.getContractFactory("BasicToken");
+        const token_factory = await ethers.getContractFactory("BasicToken") as BasicToken__factory;
         token = await token_factory.deploy(wallet_initial_balance);
         await token.deployed();
     });
