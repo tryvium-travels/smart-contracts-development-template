@@ -1,7 +1,0 @@
-{
-    "compilerType": "solcjs",
-    "compilerVersion": "0.8.11",
-    "sourceDirectory": "./contracts",
-    "outputDirectory": "./build",
-    "flattenOutputDirectory": "./flatten"
-}
