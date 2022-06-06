@@ -9,7 +9,7 @@ import "@atixlabs/hardhat-time-n-mine";
 import "hardhat-gas-reporter";
 
 module.exports = {
-  solidity: "0.8.11",
+  solidity: "0.8.14",
   paths: {
     sources: "./contracts",
     tests: "./test",
