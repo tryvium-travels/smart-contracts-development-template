@@ -1,2 +1,4 @@
 /.yarn/releases/** binary
 /.yarn/plugins/** binary
+
+assets/logo.png filter=lfs diff=lfs merge=lfs -text
